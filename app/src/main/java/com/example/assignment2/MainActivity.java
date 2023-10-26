@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements ItemSelectedListe
         else{
             Log.i("sms_OnCreate", message);
             tickerListFragment.addToTickerList(message);
+            //tickerListFragment.setWebsiteFromSMS(message);
         }
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECEIVE_SMS)

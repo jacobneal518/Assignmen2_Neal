@@ -56,16 +56,22 @@ public class InfoWebFragment extends Fragment {
         //String intent = getActivity().;
 
         String url = "https://seekingalpha.com/";
-        /*
-        String data = ((SecondActivity)getActivity()).getIntentData();
-        if(data == null){
-            Log.i("intentData", "null");
+
+        Intent intent = getActivity().getIntent();
+        if(intent == null){
+            Log.i("console", "Intent is null inside InfoWebFragment");
         }
         else{
-            Log.i("intentData", data);
-            url = data;
+            String message = intent.getStringExtra("sms");
+            if(message == null){
+                Log.i("console", "message is null inside InfoWebFragment");
+            }
+            else{
+                url = "https://seekingalpha.com/symbol/" + message;
+            }
         }
-         */
+
+
 
 
         importantView = inflater.inflate(R.layout.fragment_info_web, container, false);

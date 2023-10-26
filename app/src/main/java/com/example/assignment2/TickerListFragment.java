@@ -126,12 +126,8 @@ public class TickerListFragment extends Fragment {
     }
 
 
-    /**
-     * Remove item from Ticker list at index
-     * @param index
-     */
-    public void removeFromTickerList(int index){
-
+    public void setWebsiteFromSMS(String sms){
+        listener.onItemSelected(sms);
     }
 
 }
