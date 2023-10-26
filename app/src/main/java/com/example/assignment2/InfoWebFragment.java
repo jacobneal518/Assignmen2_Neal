@@ -20,14 +20,7 @@ import android.widget.Toast;
  */
 public class InfoWebFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public View importantView;
 
     public InfoWebFragment() {
         // Required empty public constructor
@@ -45,8 +38,6 @@ public class InfoWebFragment extends Fragment {
     public static InfoWebFragment newInstance(String param1, String param2) {
         InfoWebFragment fragment = new InfoWebFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,12 +45,6 @@ public class InfoWebFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
 
     }
 
@@ -67,33 +52,43 @@ public class InfoWebFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         //String intent = getActivity().;
 
-
+        String url = "https://seekingalpha.com/";
+        /*
         String data = ((SecondActivity)getActivity()).getIntentData();
         if(data == null){
             Log.i("intentData", "null");
         }
         else{
             Log.i("intentData", data);
+            url = data;
         }
+         */
 
 
+        importantView = inflater.inflate(R.layout.fragment_info_web, container, false);
 
-        String url = "https://pastebin.com/";
-        View v = inflater.inflate(R.layout.fragment_info_web, container, false);
 
-        WebView myWebview = (WebView) v.findViewById(R.id.webView1);
+        updateWebsite(url);
+
+
+        return importantView;
+    }
+
+    public void updateWebsite(String url){
+
+        Log.i("console", "Tried to update website to: " + url);
+        WebView myWebview = (WebView) importantView.findViewById(R.id.webView1);
         myWebview.getSettings().setJavaScriptEnabled(true);
         myWebview.getSettings().setDomStorageEnabled(true);
         myWebview.setWebViewClient(new WebViewClient());
-        myWebview.loadUrl(data);
+        myWebview.loadUrl(url);
 
         myWebview.clearView();
         myWebview.measure(100, 100);
         myWebview.getSettings().setUseWideViewPort(true);
         myWebview.getSettings().setLoadWithOverviewMode(true);
-
-        return v;
     }
 }

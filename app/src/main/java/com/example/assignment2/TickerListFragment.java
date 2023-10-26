@@ -2,11 +2,14 @@
 package com.example.assignment2;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,10 @@ public class TickerListFragment extends Fragment {
             "https://seekingalpha.com/symbol/DIS", "", "", ""};
 
     ListView listView;
+
+    public ArrayAdapter<String> adapter;
+
+    private ItemSelectedListener listener;
 
 
 
@@ -43,24 +50,27 @@ public class TickerListFragment extends Fragment {
         TickerLinkList[1] = "https://seekingalpha.com/symbol/AAPL";
         TickerLinkList[2] = "https://seekingalpha.com/symbol/DIS";
 
+        listener = (ItemSelectedListener) getContext();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i("insideSavedInstance", "about to declare View");
         View view = inflater.inflate(R.layout.fragment_ticker_list, container, false);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, TickerNameList);
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, TickerNameList);
 
         listView = view.findViewById(R.id.tickerList);
 
         listView.setAdapter(adapter);
-
+        Log.i("insideSavedInstance", "successfully set Array Adapter");
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int listIndex, long l) {
-
+                /*
                 Uri uri;
                 if(TickerLinkList[listIndex] == ""){
                     uri = Uri.parse("https://seekingalpha.com/");
@@ -72,31 +82,49 @@ public class TickerListFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), SecondActivity.class);
                 intent.putExtra(Intent.EXTRA_TEXT, TickerLinkList[listIndex]);
                 startActivity(intent);
+
+                 */
+
+                /*
+                FragmentManager fm = getParentFragmentManager();
+                InfoWebFragment fragment = (InfoWebFragment) fm.findFragmentById(R.id.InfoWebFragmentContainer);
+
+                if(fragment != null){
+                    fragment.updateWebsite(TickerLinkList[listIndex]);
+                }
+                else{
+                    Log.i("console", "Fragment was null inside TickerListFragment OnClickListener");
+                }
+                */
+
+                listener.onItemSelected(TickerLinkList[listIndex]);
+
             }
         });
 
         // Inflate the layout for this fragment
+        Log.i("insideSavedInstance", "return view");
         return view;
     }
 
 
 
 
-    /*
+
     public void addToTickerList(String ticker){
-        if(TickerList.length >= 6){
-            TickerList[5] = ticker;
-        }
-        else{
-            for(int i = 0; i < TickerList.length; i++){
-                if(TickerList[i] == ""){
-                    TickerList[i] = ticker;
-                    break;
-                }
+
+        for(int i = 0; i < 6; i++){
+            //if we find an empty one or we get to the last one, replace
+            if(TickerNameList[i] == "" || i == 5){
+                TickerNameList[i] = ticker;
+                TickerLinkList[i] = "https://seekingalpha.com/symbol/" + ticker;
+                break;
             }
         }
+
+        Log.i("console", "Added ticker: " + ticker);
     }
-    */
+
 
     /**
      * Remove item from Ticker list at index
