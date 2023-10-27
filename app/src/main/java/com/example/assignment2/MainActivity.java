@@ -72,7 +72,23 @@ public class MainActivity extends AppCompatActivity implements ItemSelectedListe
         }
         else{
             Log.i("sms_OnCreate", message);
-            tickerListFragment.addToTickerList(message);
+            String urlKey = "";
+            if(message.contains("Ticker:<<") && message.contains(">>") && message.indexOf("Ticker:<<") < message.indexOf(">>")){
+                urlKey = message.substring(message.indexOf("Ticker:<<") + 9, message.indexOf(">>"));
+
+                if(urlKey.matches("^[a-zA-Z]*$")){
+                    urlKey = urlKey.toUpperCase();
+                    Log.i("console", "We are adding the following key to the website: " + urlKey);
+                    tickerListFragment.addToTickerList(urlKey);
+                }
+                else{
+                    Toast.makeText(this, "Invalid Ticker, must be only letters", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+            else{
+                Toast.makeText(this, "Invalid Watchlist Entry for the Receiver. Must be: \"Ticker:<<[message]>>\"", Toast.LENGTH_SHORT).show();
+            }
             //tickerListFragment.setWebsiteFromSMS(message);
         }
 

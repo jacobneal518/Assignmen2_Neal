@@ -67,7 +67,13 @@ public class InfoWebFragment extends Fragment {
                 Log.i("console", "message is null inside InfoWebFragment");
             }
             else{
-                url = "https://seekingalpha.com/symbol/" + message;
+                if(message.contains("Ticker:<<") && message.contains(">>") && message.indexOf("Ticker:<<") < message.indexOf(">>")){
+                    String urlKey = message.substring(message.indexOf("Ticker:<<") + 9, message.indexOf(">>"));
+                    if(urlKey.matches("^[a-zA-Z]*$")){
+                        urlKey = urlKey.toUpperCase();
+                        url = "https://seekingalpha.com/symbol/" + urlKey;
+                    }
+                }
             }
         }
 

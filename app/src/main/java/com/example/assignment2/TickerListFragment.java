@@ -70,32 +70,6 @@ public class TickerListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int listIndex, long l) {
-                /*
-                Uri uri;
-                if(TickerLinkList[listIndex] == ""){
-                    uri = Uri.parse("https://seekingalpha.com/");
-                }
-                else{
-                    uri = Uri.parse(TickerLinkList[listIndex]);
-                }
-
-                Intent intent = new Intent(getActivity(), SecondActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, TickerLinkList[listIndex]);
-                startActivity(intent);
-
-                 */
-
-                /*
-                FragmentManager fm = getParentFragmentManager();
-                InfoWebFragment fragment = (InfoWebFragment) fm.findFragmentById(R.id.InfoWebFragmentContainer);
-
-                if(fragment != null){
-                    fragment.updateWebsite(TickerLinkList[listIndex]);
-                }
-                else{
-                    Log.i("console", "Fragment was null inside TickerListFragment OnClickListener");
-                }
-                */
 
                 listener.onItemSelected(TickerLinkList[listIndex]);
 
