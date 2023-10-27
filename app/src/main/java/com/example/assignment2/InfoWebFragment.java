@@ -34,7 +34,6 @@ public class InfoWebFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment InfoWebFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static InfoWebFragment newInstance(String param1, String param2) {
         InfoWebFragment fragment = new InfoWebFragment();
         Bundle args = new Bundle();
@@ -45,18 +44,16 @@ public class InfoWebFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-        //String intent = getActivity().;
-
+        //default url
         String url = "https://seekingalpha.com/";
 
+        //see if we have an SMS
         Intent intent = getActivity().getIntent();
         if(intent == null){
             Log.i("console", "Intent is null inside InfoWebFragment");
@@ -66,6 +63,7 @@ public class InfoWebFragment extends Fragment {
             if(message == null){
                 Log.i("console", "message is null inside InfoWebFragment");
             }
+            //make sure format is correct and if it is, update website view accordingly
             else{
                 if(message.contains("Ticker:<<") && message.contains(">>") && message.indexOf("Ticker:<<") < message.indexOf(">>")){
                     String urlKey = message.substring(message.indexOf("Ticker:<<") + 9, message.indexOf(">>"));
@@ -77,18 +75,20 @@ public class InfoWebFragment extends Fragment {
             }
         }
 
-
-
-
+        //inflate view
         importantView = inflater.inflate(R.layout.fragment_info_web, container, false);
 
-
+        //update url display for WebView
         updateWebsite(url);
 
 
         return importantView;
     }
 
+    /**
+     * Updates website displayed
+     * @param url
+     */
     public void updateWebsite(String url){
 
         Log.i("console", "Tried to update website to: " + url);

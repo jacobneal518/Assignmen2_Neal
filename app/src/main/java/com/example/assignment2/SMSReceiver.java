@@ -13,6 +13,9 @@ import android.widget.Toast;
 public class SMSReceiver extends BroadcastReceiver {
 
     @Override
+    /**
+     * THis handles the receiving of SMS messages and parsing them
+     */
     public void onReceive(Context context, Intent intent) {
         Log.i("SMSText", "On Receiver");
         final Bundle bundle = intent.getExtras();
@@ -25,11 +28,11 @@ public class SMSReceiver extends BroadcastReceiver {
                 String sender = "";
                 String message = "";
                 for(int i = 0 ; i < pdusObj.length ; i++){
+                    //parse message and launch new activity with this data
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i], format);
                     sender = currentMessage.getDisplayOriginatingAddress();
                     message = currentMessage.getDisplayMessageBody();
                     String printMessage = "Sender: " + sender + " Message: " + message;
-                    //Toast.makeText(context, printMessage, Toast.LENGTH_SHORT).show();
 
 
                     Intent activityIntent = new Intent(context, MainActivity.class);

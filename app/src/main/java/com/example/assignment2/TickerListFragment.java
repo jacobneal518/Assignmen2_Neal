@@ -41,7 +41,7 @@ public class TickerListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //get default entries
         TickerNameList[0] = "BAC";
         TickerNameList[1] = "AAPL";
         TickerNameList[2] = "DIS";
@@ -50,6 +50,7 @@ public class TickerListFragment extends Fragment {
         TickerLinkList[1] = "https://seekingalpha.com/symbol/AAPL";
         TickerLinkList[2] = "https://seekingalpha.com/symbol/DIS";
 
+        //access interface listener to pass new ticker to website
         listener = (ItemSelectedListener) getContext();
 
     }
@@ -60,7 +61,7 @@ public class TickerListFragment extends Fragment {
         Log.i("insideSavedInstance", "about to declare View");
         View view = inflater.inflate(R.layout.fragment_ticker_list, container, false);
 
-
+        //set adapter to let each item in list be a button
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, TickerNameList);
 
         listView = view.findViewById(R.id.tickerList);
@@ -70,7 +71,7 @@ public class TickerListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int listIndex, long l) {
-
+                //open the URL with the listener depending on which item in list was clicked
                 listener.onItemSelected(TickerLinkList[listIndex]);
 
             }
@@ -82,9 +83,10 @@ public class TickerListFragment extends Fragment {
     }
 
 
-
-
-
+    /**
+     * Updates ticker list
+     * @param ticker
+     */
     public void addToTickerList(String ticker){
 
         for(int i = 0; i < 6; i++){
@@ -99,9 +101,5 @@ public class TickerListFragment extends Fragment {
         Log.i("console", "Added ticker: " + ticker);
     }
 
-
-    public void setWebsiteFromSMS(String sms){
-        listener.onItemSelected(sms);
-    }
 
 }
